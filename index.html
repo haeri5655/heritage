@@ -14,25 +14,28 @@
   <div id="3d-graph"></div>
 
   <script>
-    const distance = 1400;             //이거 넣어야 함.
+    const distance = 1400;             
 
-    let isRotationActive = true;       //이거 넣어야 함.
+    let isRotationActive = true;       
 
     const Graph = ForceGraph3D()
       (document.getElementById('3d-graph'))
-        .jsonUrl('cultural_heritage_json_0913_noMatching.json')
-        .enableNodeDrag(false)              //이거 넣어야 함.
-        .enableNavigationControls(false)    //이거 넣어야 함.
-        .showNavInfo(false)                 //이거 넣어야 함.
-        .cameraPosition({ z: distance })    //이거 넣어야 함.
+        .jsonUrl('cultural_heritage_json_0914_noMatching_sample.json')
+        .enableNodeDrag(false)              
+        .enableNavigationControls(false)    
+        .showNavInfo(false)                 
+        .cameraPosition({ z: distance })    
         .nodeLabel('id')
-        .nodeAutoColorBy('group');
-
+        .nodeAutoColorBy('group')  
+        .nodeRelSize([8]); 
+  
     const bloomPass = new THREE.UnrealBloomPass();
     bloomPass.strength = 3;
     bloomPass.radius = 1;
     bloomPass.threshold = 0.1;
     Graph.postProcessingComposer().addPass(bloomPass);
+    
+
 
     // 이 아래 친구들 넣어야 함.
     let angle = 0;
@@ -45,5 +48,9 @@
       angle += Math.PI / 300;
       }
     }, 10);
+    
+    
+    // Spread nodes a little wider
+    Graph.d3Force('charge').strength(-300);
   </script>
 </body>
